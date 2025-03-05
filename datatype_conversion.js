@@ -24,3 +24,5 @@ For boolean typecasting: Boolean(arguments):
 1 or "anyvalue" -> true
 0 or "" -> false
 */
+
+
