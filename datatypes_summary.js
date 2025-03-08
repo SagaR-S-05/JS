@@ -37,4 +37,4 @@ const myFunction=function()
     console.log("Hello world");
 }
 
-// To identify type of data: Use sizeof
+// To identify type of data: Use typeof
