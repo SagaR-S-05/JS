@@ -38,4 +38,4 @@ console.log(newDate.getTime()); // 1741899567585 ms
 newDate.toLocaleString('default',  // Allows to customize parameters.
     {
         weekday: 'long'
-    }
+    })
