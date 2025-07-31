@@ -1,0 +1,45 @@
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>title</title>
+</head>
+<body style="background-color: black;
+color: white;">
+    <div class="parent">
+        <div class="day">Mon</div>
+        <div class="day">Tue</div>
+        <div class="day">Wed</div>
+        <div class="day">Thurs</div>
+    </div>
+</body>
+<script>
+    // Check everything in the browser
+    const parent=document.querySelector('.parent')
+    // console.log(parent.children); //HTMLCollection(4) [div.day, div.day, div.day, div.day]
+    // console.log(parent.children[1].innerHTML); // Tue
+    
+    // for (let index = 0; index < parent.children.length; index++) {
+    //     console.log(parent.children[index].innerHTML);
+    //                         /*
+    //                         Mon
+    //                         Tue
+    //                         Wed
+    //                         Thurs
+    //                         */
+    // }
+    // parent.children[1].style.color="orange" 
+    // console.log(parent.firstElementChild); // Gives div of Mon
+    // console.log(parent.lastElementChild); // Gives div of Thurs
+    
+    // const day1=document.querySelector('.day')
+    // console.log(day1); // / Gives div of Mon, getting the child directly. 
+    // // Takes time as this needs to traverse the entire tree.
+    // console.log(day1.parentElement); // Gives the entire parent div
+    // console.log(day1.nextElementSibling); // Tue div
+    
+    
+    console.log("NODES: ",parent.childNodes); // Gives 9
+    //NodeList(9) [text, div.day, text, div.day, text, div.day, text, div.day, text]
+    //(line break),(Mon div),(line break),(Tue div),(line break),(Wed div),(line break),(Thur div),(line break)
+</script>
+</html>
