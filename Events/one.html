@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>html Events </title>
+</head>
+<body style="background-color: #414141; color: aliceblue;">
+    <h2>Amazing image</h2>
+    <div >
+        <ul id="images">
+            <li><img width="200px" id="photoshop" src="https://images.pexels.com/photos/3561339/pexels-photo-3561339.jpeg?auto=compress&cs=tinysrgb&w=1600&lazy=load" alt="photoshop"></li>
+            <li><img width="200px" id="japan" src="https://images.pexels.com/photos/3532553/pexels-photo-3532553.jpeg?auto=compress&cs=tinysrgb&w=1600&lazy=load" alt=""></li>
+            <li><img width="200px" id="river" src="https://images.pexels.com/photos/3532551/pexels-photo-3532551.jpeg?auto=compress&cs=tinysrgb&w=1600&lazy=load" alt=""></li>
+            <li><img width="200px" id="owl" src="https://images.pexels.com/photos/3532552/pexels-photo-3532552.jpeg?auto=compress&cs=tinysrgb&w=1600&lazy=load" alt="" ></li>
+            <li><img width="200px" id="prayer" src="https://images.pexels.com/photos/2522671/pexels-photo-2522671.jpeg?auto=compress&cs=tinysrgb&w=1600&lazy=load" alt=""></li>
+            <li><a style="color: aliceblue;" href="https://google.com" id="google">Google</a></li>
+        </ul>
+   </div>
+</body>
+<script>
+/*
+    No problem with this, but has less features
+    document.getElementById('owl').onclick=function()
+    {
+        alert("owl clicked")
+    }
+    Other methods : attachEvent(), jQuery - on
+    Nowadays, we use event listners
+    document.getElementById('owl').addEventListener('click',function(e){
+        alert("Owl Clicked!")},false) // false is default
+    Read more about : type,timestamp,preventDefault,
+    target,toElement,srcElement,currentTarget,
+    clientX,clientY,screenX,screenY
+    altkey,ctrlkey,shiftkey,keyCode,
+*/
+
+/*
+    // Event propagation: Two types :
+
+    // 1. Event bubbling:The event starts at the target element (where it happened)
+    // Then it bubbles up through its ancestors (parent → grandparent → … → document).
+    document.getElementById('images').addEventListener('click',function(e){
+        console.log("Clicked inside ul");
+    },false) 
+    document.getElementById('owl').addEventListener('click',function(e){
+        console.log("Owl Clicked");
+    },false) 
+
+    // Here, first the specific li -> owl is the first event, and then the entire ul
+
+    // 2. Event capturing : The event starts from the document root 
+    // Then it travels down through ancestors until it reaches the target element.
+    document.getElementById('images').addEventListener('click',function(e){
+        console.log("Clicked inside ul");
+    },true) 
+    document.getElementById('owl').addEventListener('click',function(e){
+        console.log("Owl Clicked");
+    },true) 
+    // If both parameters are set to 'true', the vice-versa of event bubbling happens.
+
+    // To stop propagation : use stopPropagation()
+*/
+
+/*
+    // To stop default behaviour, use preventDefault()
+    // Here, stopping/preventing default usage of google
+    document.getElementById('google').addEventListener('click',function(e){
+        e.preventDefault();
+        console.log("Google Clicked!");
+        // Here, we'll not be redirected to the google hyperlink. 
+        // Instead, the hyperlink redirection is prevented 
+        // Google Clicked is seen in the console
+    },false)
+*/
+
+// A small task of removing all images when clicked
+document.querySelector('#images').addEventListener('click',function(e){
+    
+    /*
+    console.log(e.target.parentNode);
+    let removeIt = e.target.parentNode
+    removeIt.remove()
+    At this point, if we click on 'google', 
+    that goes to the parent -> images, so everything clears
+    So, we just put tags on each, and put a condition that 
+    if tag is IMG, then only it should be removed
+    */ 
+   console.log(e.target.tagName); // IMG -> Images, Google hyperlink -> LI
+   if(e.target.tagName==='IMG')
+   {
+        console.log(e.target.id); // ids like japan, photoshop is printed
+        
+        let removeIt=e.target.parentNode
+        removeIt.remove()
+   }
+})
+
+</script>
+    
+    
+</html>
