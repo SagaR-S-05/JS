@@ -1,0 +1,55 @@
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>title</title>
+</head>
+<body style="background-color: black; color: white;">
+    <ul class="language">
+        <li>JS</li>
+    </ul>
+</body>
+<script>
+    // Not optimized approach - Tree is traveresed everywhere.
+    function addLanguage(langname)
+    {
+        const li=document.createElement('li');
+        li.innerHTML=`${langname}`
+        document.querySelector('.language').appendChild(li) 
+    }
+    addLanguage("python")
+    addLanguage("Typescript")
+
+    // Optimized approach - Complete tree is not traversed.
+    function anotherlang(langname)
+    {
+        const li = document.createElement('li');
+        li.appendChild(document.createTextNode(langname))
+        document.querySelector('.language').appendChild(li)
+    }
+
+    anotherlang("golang")
+    anotherlang("C++")
+
+    // Edit
+    const second_lang = document.querySelector("li:nth-child(2)") 
+    // :nth-child(n) → Position among all children.
+    // :nth-of-type(n) → Position among same-tag siblings.
+    const newli = document.createElement('li')
+    newli.textContent = "C#"
+    second_lang.replaceWith(newli)
+
+    const third_lang = document.querySelector("li:nth-child(3)")
+    console.log(third_lang)
+    const another_li = document.createElement('li')
+    another_li.textContent="Rust"
+    third_lang.replaceWith(another_li) 
+    
+    // Another way - Using outerHTML
+    const first_lang = document.querySelector('li:first-child')
+    first_lang.outerHTML = '<li>Java</li>'
+
+    // Remove
+    const Lastlang = document.querySelector('li:last-child')
+    Lastlang.remove()
+</script>
+</html>
