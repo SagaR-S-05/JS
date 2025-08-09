@@ -1,0 +1,126 @@
+console.log("Step 1: Start");
+
+setTimeout(() => {
+  console.log("Step 2: Timeout done");
+}, 2000);
+
+console.log("Step 3: End");
+
+1️⃣ Call Stack at the start
+JavaScript has one main thread where the call stack runs.
+When you run this code:
+
+console.log("Step 1: Start")
+
+Goes on the call stack → runs immediately → logs to console.
+
+Removed from stack.
+
+setTimeout(...)
+
+Goes on the call stack.
+
+JavaScript doesn’t wait here—it passes the timer and callback to the Web API environment (part of the browser or Node.js).
+
+The call stack is now free to continue running.
+
+console.log("Step 3: End")
+
+Goes on the call stack → runs immediately → logs to console.
+
+2️⃣ Web APIs at work
+The Web API starts a 2000ms timer for the setTimeout callback.
+
+This part is outside the main JS thread—it’s handled by the browser/Node environment.
+
+3️⃣ Callback Queue
+After 2 seconds, the Web API says:
+“Hey, I’ve finished the timer, here’s your callback function.”
+
+It places the callback into the callback queue (also called the task queue).
+
+4️⃣ Event Loop
+The event loop constantly checks:
+
+“Is the call stack empty? If yes, take the first task from the callback queue and push it to the call stack.”
+
+As soon as the call stack is free (after Step 3), the callback is pushed in.
+
+The callback executes → logs "Step 2: Timeout done".
+
+Timeline view
+| Time    | Call Stack        | Web API       | Callback Queue    | Console Output       |
+| ------- | ----------------- | ------------- | ----------------- | -------------------- |
+| 0 ms    | `console.log`     |               |                   | Step 1: Start        |
+| 1 ms    | `setTimeout`      | Timer starts  |                   |                      |
+| 2 ms    | `console.log`     | Timer running |                   | Step 3: End          |
+| 2000 ms | (empty)           | Timer done    | Callback enqueued |                      |
+| 2001 ms | callback on stack |               |                   | Step 2: Timeout done |
+
+
+Key points:
+
+JavaScript itself is single-threaded, but async behavior comes from the browser/Node runtime using Web APIs.
+
+Async functions don’t block the call stack—they hand off work to Web APIs.
+
+The event loop decides when to run the async callback.
+
+If you want, I can make you a diagram showing how the call stack, Web API, and event loop interact for this exact example—it’ll make it even clearer visually.
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+In JavaScript’s runtime model, the call stack and the callback queue have very different jobs, even though they both deal with “what code runs next.”
+
+1. Call Stack (Execution Stack)
+Purpose: Holds functions that are currently being executed.
+
+Nature: LIFO (Last In, First Out) — last function pushed is the first to run.
+
+Who uses it: All normal synchronous code (console.log, loops, math operations, etc.).
+
+When it’s used:
+
+When you call a function, it’s pushed onto the stack.
+
+When the function returns, it’s popped off.
+
+Blocking behavior: If the stack is busy, nothing else (including async callbacks) can run.
+
+Example:
+
+function foo() {
+  console.log("Foo");
+}
+foo(); // pushed to stack, runs immediately
+
+
+2. Callback Queue (Task Queue)
+Purpose: Holds ready-to-run async callbacks waiting for the stack to be empty.
+
+Nature: FIFO (First In, First Out) — first callback in line is the first to be processed.
+
+Who uses it: Timers (setTimeout), DOM events, network requests, some async APIs.
+
+When it’s used:
+
+An async task finishes (timer ends, data arrives, click event happens).
+
+Its callback is put into the queue.
+
+The event loop moves it to the call stack only when the stack is empty.
+
+Example:
+
+setTimeout(() => console.log("From Queue"), 1000);
+After 1s, the callback waits in the queue until the stack is clear.
+
+How they work together:
+Call Stack runs all synchronous code first.
+
+Async functions delegate work to Web APIs.
+
+When async work finishes, their callbacks go into the callback queue.
+
+Event Loop moves tasks from queue → stack when the stack is empty.
+

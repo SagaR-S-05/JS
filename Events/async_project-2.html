@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body style="background-color: black;color: white;">
+    <h1>Hi Again!</h1>
+    <button id="Start">Start</button>
+    <button id="Stop">Stop</button>
+</body>
+<script>
+  const sayDate = function(str)
+  {
+    console.log(str,Date.now());
+  }
+
+  let intervalID
+  document.querySelector('#Start').addEventListener('click',function(){
+    if(!intervalID) // If not null, then continue
+    {
+         intervalID =  setInterval(sayDate,1000,"hi")
+    }
+  })
+
+document.querySelector('#Stop').addEventListener('click',function(){
+    clearInterval(intervalID)
+    intervalID=null; // Flushing out after clearing
+})
+
+</script>
+</html>
+
